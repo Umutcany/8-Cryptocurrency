@@ -26,12 +26,14 @@ const Cryptocurrencies: React.FC<Props> = ({ simplified }) => {
 
   return (
     <div className="yazi">
-      <div className="search-crypto">
-        <Input
-          placeholder="İstediğiniz kripto parayı yazınız."
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </div>
+      {!simplified && (
+        <div className="search-crypto">
+          <Input
+            placeholder="İstediğiniz kripto parayı yazınız."
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+      )}
       <Row gutter={[32, 32]} className="crypto-card-container  ">
         {cryptos?.map((currency: any) => (
           <Col
