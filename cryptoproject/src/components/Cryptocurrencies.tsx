@@ -20,6 +20,7 @@ const Cryptocurrencies: React.FC<Props> = ({ simplified }) => {
     );
 
     setCryptos(filteredData);
+    console.log(cryptosList?.data);
   }, [cryptosList, searchTerm]);
 
   if (isFetching) return "Loading...";
@@ -43,7 +44,7 @@ const Cryptocurrencies: React.FC<Props> = ({ simplified }) => {
             className="crypto-card "
             key={currency.id}
           >
-            <Link to={`/crypto/${currency.id}`}>
+            <Link to={`/crypto/${currency.uuid}`}>
               <Card
                 extra={<img className="crypto-image" src={currency.iconUrl} />}
                 title={`${currency.rank}.${currency.name}`}
