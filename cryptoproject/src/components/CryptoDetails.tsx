@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import millify from "millify";
 import { Col, Row, Typography, Select } from "antd";
 import { useGetCryptosDetailsQuery } from "../services/cryptoApi";
-
 import {
   MoneyCollectOutlined,
   DollarCircleOutlined,
@@ -26,7 +25,7 @@ const CryptoDetails = () => {
   const { data, isFetching } = useGetCryptosDetailsQuery(coinId);
   const cryptoDetails = data?.data?.coin;
 
-  const time = ["3h", "24h", "7d", "30d", "1y", "3m", "3y", "5y"];
+  const time: string[] = ["3h", "24h", "7d", "30d", "1y", "3m", "3y", "5y"];
 
   const stats = [
     {
@@ -37,7 +36,9 @@ const CryptoDetails = () => {
     { title: "Rank", value: cryptoDetails?.rank, icon: <NumberOutlined /> },
     {
       title: "24h Volume",
-      value: `$ ${cryptoDetails?.volume && millify(cryptoDetails?.volume)}`,
+      value: `$ ${
+        cryptoDetails?.["24hVolume"] && millify(cryptoDetails["24hVolume"])
+      }`,
       icon: <ThunderboltOutlined />,
     },
     {
@@ -98,12 +99,14 @@ const CryptoDetails = () => {
     <div className="yazi">
       <Col className="coin-detail-container">
         <Col className="coin-heading-container">
-          <Title level={2} className="coin-name">
-            {cryptoDetails.name} ({cryptoDetails.symbol}) Price
-          </Title>
+          {cryptoDetails && cryptoDetails.name && (
+            <Title level={2} className="coin-name">
+              {cryptoDetails.name} ({cryptoDetails.symbol}) Price
+            </Title>
+          )}
           <p>
-            {cryptoDetails.name} live price in US dollars. View value
-            statistics, market cap and supply
+            {cryptoDetails?.name} live price in US dollars. View value
+            statistics, market cap, and supply
           </p>
         </Col>
         <Select
@@ -112,10 +115,47 @@ const CryptoDetails = () => {
           placeholder="Select Time Period"
           onChange={(value) => setTimePeriod(value)}
         >
-          {time.map((date) => (
+          {time.map((date: string) => (
             <Option key={date}>{date}</Option>
           ))}
         </Select>
+        {/* line chart */}
+        <Col className="stats-container">
+          <Col className="coin-value-statistics">
+            <Col className="coin-value-statistics-heading">
+              <Title level={2} className="coin-details-heading">
+                {cryptoDetails?.name} Value Statistics
+              </Title>
+              <p>An overview showing the stats of {cryptoDetails.name}</p>
+            </Col>
+            {stats?.map(({ icon, title, value }) => (
+              <Col className="coin-stats">
+                <Col className="coin-stats-name">
+                  <Text>{icon}</Text>
+                  <Text>{title}</Text>
+                </Col>
+                <Text className="stats">{value}</Text>
+              </Col>
+            ))}
+          </Col>
+          <Col className="other-stats-info">
+            <Col className="coin-value-statistics-heading">
+              <Title level={2} className="coin-details-heading">
+                {cryptoDetails?.name} Other Statistics
+              </Title>
+              <p>An overview showingthe stats of all cryptocurrencies</p>
+            </Col>
+            {genericStats?.map(({ icon, title, value }) => (
+              <Col className="coin-stats">
+                <Col className="coin-stats-name">
+                  <Text>{icon}</Text>
+                  <Text>{title}</Text>
+                </Col>
+                <Text className="stats">{value}</Text>
+              </Col>
+            ))}
+          </Col>
+        </Col>
       </Col>
     </div>
   );
