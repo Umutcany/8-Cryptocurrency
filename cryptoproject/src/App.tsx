@@ -22,7 +22,6 @@ function App() {
           <div className="routes">
             <Routes>
               <Route path="/" element={<Homepage />} />
-              <Route path="/exchanges" element={<Exchanges />} />
               <Route path="/cryptocurrencies" element={<Cryptocurrencies />} />
               <Route path="/crypto/:coinId" element={<CryptoDetails />} />
               <Route path="/news" element={<News />} />
@@ -39,7 +38,6 @@ function App() {
           </Typography.Title>
           <Space>
             <Link to="/">Ana Sayfa</Link>
-            <Link to="/exchanges">Borsa</Link>
             <Link to="/news">Haberler</Link>
           </Space>
         </div>
