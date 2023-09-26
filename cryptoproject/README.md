@@ -1,3 +1,17 @@
+
+
+![Ornek1](image.png)
+![Ornek2](image-1.png)
+![Alt text](image-2.png)
+![Alt text](image-4.png)
+![Alt text](image-5.png)
+
+
+
+
+
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
