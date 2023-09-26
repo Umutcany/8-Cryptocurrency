@@ -25,7 +25,15 @@ const CryptoDetails = () => {
   const { data, isFetching } = useGetCryptosDetailsQuery(coinId);
   const cryptoDetails = data?.data?.coin;
 
+  if (isFetching) return "Loading...";
+
   const time: string[] = ["3h", "24h", "7d", "30d", "1y", "3m", "3y", "5y"];
+
+  interface Props {
+    name: string;
+    type: string;
+    url: string;
+  }
 
   const stats = [
     {
@@ -153,6 +161,29 @@ const CryptoDetails = () => {
                 </Col>
                 <Text className="stats">{value}</Text>
               </Col>
+            ))}
+          </Col>
+        </Col>
+        <Col className="coin-desc-link">
+          <Row className="coin-desc">
+            <Title level={3} className="coin-details-heading">
+              What is {cryptoDetails.name}?
+            </Title>
+            {HTMLReactParser(cryptoDetails.description)}
+          </Row>
+          <Col className="coin-links">
+            <Title level={3} className="coin-details-heading">
+              {cryptoDetails.name} Links
+            </Title>
+            {cryptoDetails.links.map((link: Props) => (
+              <Row className="coin-link" key={link.name}>
+                <Title level={5} className="link-name">
+                  {link.type}
+                </Title>
+                <a href={link.url} target="_blank" rel="noreferrer">
+                  {link.name}
+                </a>
+              </Row>
             ))}
           </Col>
         </Col>
